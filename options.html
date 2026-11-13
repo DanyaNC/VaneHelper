@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vane Helper - Settings</title>
+    <link rel="stylesheet" href="ui/theme.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(90% 55% at 50% 0%, var(--accent-soft) 0%, transparent 65%),
+                var(--bg);
+        }
+        .page {
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 48px 24px 64px;
+        }
+
+        .page-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 6px;
+        }
+        .page-head .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: var(--accent);
+            color: var(--accent-text);
+            font-weight: 700;
+            font-size: 1.15rem;
+            box-shadow: var(--shadow-md);
+        }
+        h1 {
+            font-size: 1.55rem;
+            font-weight: 680;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0 0 28px;
+            line-height: 1.5;
+        }
+
+        section.panel {
+            padding: 20px 22px 22px;
+            margin-bottom: 16px;
+        }
+        .panel h2 {
+            font-size: 0.78rem;
+            font-weight: 650;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-faint);
+            margin: 0 0 16px;
+        }
+        .panel.feature-section { margin-top: 0; }
+
+        .field-group { margin-bottom: 18px; }
+        .field-group:last-child { margin-bottom: 0; }
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 0.86rem;
+        }
+
+        .actions {
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 0 4px;
+        }
+        .status {
+            font-size: 0.85rem;
+            font-weight: 550;
+            color: var(--text-muted);
+            opacity: 0;
+            transform: translateY(2px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .status.visible { opacity: 1; transform: none; }
+        .status.success { color: var(--success); }
+        .status.error { color: var(--danger); }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-head">
+            <div class="brand-mark">V</div>
+            <h1>Settings</h1>
+        </header>
+        <p class="subtitle">
+            Global settings apply to every feature. Feature settings apply only to their feature.
+        </p>
+
+        <section class="card panel">
+            <h2>Global</h2>
+            <div class="field-group">
+                <label for="notion-token">Notion Integration Token</label>
+                <input class="field" type="password" id="notion-token" placeholder="ntn_... or secret_..." autocomplete="off">
+                <div class="hint">Create an integration at notion.so/my-integrations and paste its token here.</div>
+            </div>
+        </section>
+
+        <!-- Per-feature settings sections are generated here. -->
+        <div id="feature-settings"></div>
+
+        <div class="actions">
+            <button id="save-settings-btn" class="btn" type="button">Save Settings</button>
+            <div class="status" id="settings-status" role="status" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <!-- Feature scripts describe their own settings, then registry.js collects them. -->
+    <script src="features/reverse-stories/feature.js"></script>
+    <script src="features/registry.js"></script>
+    <script src="options.js"></script>
+</body>
+</html>
